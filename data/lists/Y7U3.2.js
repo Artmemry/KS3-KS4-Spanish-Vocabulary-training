@@ -1,0 +1,50 @@
+/* Y7U3.2 — 3.1 School – Subject Preferences – ¿Por qué?
+   Year 7 · Unidad 3 — Mi instituto — my school
+   One pair per line: ["Spanish", "English"]. Separate interchangeable
+   forms with a semicolon — "el chico;un chico" / "the boy;a boy;boy".
+   Add, remove or reorder freely: a word keeps its place in a student's
+   progress as long as its Spanish stays the same. */
+BBA.list("Y7U3.2", [
+  ["¿Te gusta el inglés?", "Do you like English?"],
+  ["¿Te gustan las matemáticas?", "Do you like maths?"],
+  ["Me gusta el inglés.", "I like English."],
+  ["No me gustan las matemáticas.", "I do not like maths."],
+  ["me gusta ir", "I like to go"],
+  ["me gustan", "I like plural"],
+  ["me encanta", "I love singular"],
+  ["me encantan", "I love plural"],
+  ["odia", "he hates"],
+  ["odia", "she hates"],
+  ["odiar", "to hate"],
+  ["gustar", "to like"],
+  ["encantar", "to love"],
+  ["¿Por qué?", "Why?"],
+  ["bueno", "good"],
+  ["buena", "good"],
+  ["malo", "bad"],
+  ["mala", "bad"],
+  ["difícil", "difficult"],
+  ["fácil", "easy"],
+  ["duro", "hard"],
+  ["dura", "hard"],
+  ["imposible", "impossible"],
+  ["emocionante", "exciting"],
+  ["útil", "useful"],
+  ["inútil", "useless"],
+  ["necesario", "necessary"],
+  ["necesaria", "necessary"],
+  ["práctico", "practical"],
+  ["práctica", "practical"],
+  ["educativo", "educational"],
+  ["educativa", "educational"],
+  ["escolar", "school related"],
+  ["completamente", "completely"],
+  ["extremadamente", "extremely"],
+  ["totalmente", "totally"],
+  ["demasiado", "too"],
+  ["menos", "less"],
+  ["menos clases que", "fewer classes than"],
+  ["se me da bien el español", "I am good at Spanish"],
+  ["la opinión", "the opinion"],
+  ["la atención", "the attention"]
+]);

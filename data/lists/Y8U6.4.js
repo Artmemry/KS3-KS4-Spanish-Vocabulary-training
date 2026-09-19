@@ -1,0 +1,50 @@
+/* Y8U6.4 — ¿Qué vas a hacer después de los GCSEs?
+   Year 8 · Unidad 6 — La comida y la salud — food and health
+   One pair per line: ["Spanish", "English"]. Separate interchangeable
+   forms with a semicolon — "el chico;un chico" / "the boy;a boy;boy".
+   Add, remove or reorder freely: a word keeps its place in a student's
+   progress as long as its Spanish stays the same. */
+BBA.list("Y8U6.4", [
+  ["Voy al centro comercial porque es divertido", "I go to the mall because it's fun"],
+  ["Vamos a la piscina, pero es bastante aburrido", "We go to the pool, but it's quite boring"],
+  ["voy a bañarme", "I'm going to swim (lit. bathe myself)"],
+  ["vas a bañarte", "you're going to swim"],
+  ["vamos a bañarnos", "we're going to swim;we are going to swim"],
+  ["Si hace calor, voy a bañarme", "If it's hot, I'll go swimming"],
+  ["voy a la playa", "I go to the beach"],
+  ["Voy al centro comercial", "I go to the shopping mall"],
+  ["voy a", "I'm going to"],
+  ["vas a", "you're going to"],
+  ["va a", "he's going to;she's going to"],
+  ["vamos a", "we're going to"],
+  ["va a", "he's is going to;she's going to"],
+  ["voy a ir", "I am going to go"],
+  ["el año próximo voy a ir al club de ajedrez", "next year I am going to go to the chess club"],
+  ["voy a aprender", "I am going to learn"],
+  ["vas a aprender", "you are going to learn"],
+  ["vamos a aprender", "we are going to learn"],
+  ["va a ser", "it is going to be;he is going to be;she is going to be"],
+  ["probablemente voy a estudiar", "I am probably going to study"],
+  ["probablemente voy a aprender", "I am probably going to learn"],
+  ["en este momento voy a estudiar", "at this moment I am going to study"],
+  ["voy a estudiar español", "I am going to study Spanish"],
+  ["voy a estudiar matemáticas", "I am going to study mathematics"],
+  ["voy a estudiar ciencias", "I am going to study science"],
+  ["voy a estudiar geografía", "I am going to study geography"],
+  ["voy a estudiar informática", "I am going to study ICT"],
+  ["voy a estudiar arte", "I am going to study art"],
+  ["la universidad", "university"],
+  ["tener éxito", "to be successful"],
+  ["ir a la universidad", "to go to university"],
+  ["después de los GCSEs", "after GCSEs"],
+  ["¿Qué vas a hacer después de los GCSEs?", "What are you going to do after GCSEs?"],
+  ["me gustaría ir a la universidad", "I would like to go to university"],
+  ["espero tener éxito", "I hope to be successful"],
+  ["voy a hacer formación en un garaje", "I am going to do training in a garage"],
+  ["va a ser interesante", "it is going to be interesting"],
+  ["va a ser un problema", "it is going to be a problem"],
+  ["voy a ser abogado", "I am going to be a lawyer"],
+  ["para tener éxito", "to be successful"],
+  ["trabajar", "to work"],
+  ["Voy a la piscina", "I go to the pool"]
+]);
