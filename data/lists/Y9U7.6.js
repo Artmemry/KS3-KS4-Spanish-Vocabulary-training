@@ -1,0 +1,51 @@
+/* Y9U7.6 — Healthy living: recap: sports
+   Year 9 · Unidad 7 — El estilo de vida — lifestyles
+   One pair per line: ["Spanish", "English"]. Separate interchangeable
+   forms with a semicolon — "el chico;un chico" / "the boy;a boy;boy".
+   Add, remove or reorder freely: a word keeps its place in a student's
+   progress as long as its Spanish stays the same. */
+BBA.list("Y9U7.6", [
+  ["la dieta", "diet"],
+  ["el ejercicio", "exercise"],
+  ["la forma;forma", "shape;fitness"],
+  ["la vida", "life"],
+  ["nada", "nothing"],
+  ["solamente", "only"],
+  ["solo", "alone"],
+  ["el deporte", "sport;sports"],
+  ["jugar", "to play"],
+  ["juego", "I play"],
+  ["juega", "she plays;he plays"],
+  ["jugamos", "we play;we played"],
+  ["hacer ejercicio", "to do exercise;to exercise"],
+  ["hago ejercicio", "I do exercise"],
+  ["hace ejercicio", "he does exercise;she does exercise"],
+  ["hacemos ejercicio", "we do exercise"],
+  ["practicar", "to practise;practice;to practice"],
+  ["practico", "I practise"],
+  ["practica", "she practises;he practises"],
+  ["practicamos", "we practise"],
+  ["correr", "to run"],
+  ["corro", "I run"],
+  ["corre", "she runs;he runs;it runs"],
+  ["corremos", "we run"],
+  ["bailar", "to dance"],
+  ["bailo", "I dance"],
+  ["baila", "he dances;she dances"],
+  ["bailamos", "we dance"],
+  ["ir al centro deportivo", "to go to the sports centre"],
+  ["voy al centro deportivo", "I go to the sports centre"],
+  ["va al centro deportivo", "she goes to the sports centre;he goes to the sports centre"],
+  ["vamos al centro deportivo", "we go to the sports centre"],
+  ["el partido", "match"],
+  ["el club", "club"],
+  ["el miembro", "member"],
+  ["el fin de semana", "weekend"],
+  ["el lunes", "Monday"],
+  ["el martes", "Tuesday"],
+  ["el miércoles", "Wednesday"],
+  ["el jueves", "Thursday"],
+  ["el viernes", "Friday"],
+  ["el sábado", "Saturday"],
+  ["el domingo", "Sunday"]
+]);
