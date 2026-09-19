@@ -1,0 +1,295 @@
+/* Le Lexique — design system
+   Direction: French lexicography. Dictionary-entry cards, red homograph
+   numerals as the signature, ink blue + Robert red on near-white paper. */
+
+:root{
+  --paper:#FBFAF6;
+  --card:#FFFFFF;
+  --ink:#1A2440;
+  --ink-soft:#4A5570;
+  --muted:#8A8F9E;
+  --rouge:#C60B1E;      /* rojo bandera — numerals, accents */
+  --bleu:#2B4C9B;       /* actions, links */
+  --bleu-pale:#EDF1FA;
+  --vert:#2E7D52;       /* correct */
+  --vert-pale:#EAF4EE;
+  --rouge-pale:#FBEDEE;
+  --line:#E5E2D8;
+  --line-strong:#CFCBBD;
+  --radius:10px;
+  --shadow:0 1px 2px rgba(26,36,64,.06), 0 4px 16px rgba(26,36,64,.05);
+  --font-display:"Fraunces", Georgia, serif;
+  --font-body:"IBM Plex Sans", system-ui, sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); font-size:16px; line-height:1.55;
+}
+:focus-visible{outline:2px solid var(--bleu); outline-offset:2px; border-radius:4px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important; transition:none!important}
+}
+
+/* ── the strip that says what the teacher has ──
+   It sits under the header on every tab, so the answer to "has my teacher
+   seen this?" is never more than a glance away. Amber when something is
+   waiting, green when nothing is. */
+.sendbar{
+  border-bottom:1px solid var(--line-strong);
+  background:var(--bleu-pale);
+  padding:0 20px;
+  font-size:.9rem;
+}
+.sendbar.hidden{display:none}
+.sendbar-inner{
+  max-width:1060px; margin:0 auto; padding:9px 0;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.sendbar .dot{
+  width:9px; height:9px; border-radius:50%; flex:0 0 auto; background:var(--bleu);
+}
+.sendbar .txt{flex:1; min-width:200px; line-height:1.4}
+.sendbar .txt b{font-weight:600}
+.sendbar .ago{color:var(--ink-soft)}
+.sendbar.waiting{background:#FDF6EC; border-bottom-color:#E4CFA6}
+.sendbar.waiting .dot{background:#B07B12}
+.sendbar.clear{background:var(--vert-pale); border-bottom-color:#BFD9CB}
+.sendbar.clear .dot{background:var(--vert)}
+.sendbar .btn{padding:5px 12px; font-size:.85rem}
+@media print{.sendbar{display:none}}
+
+/* ── the send panel at the end of an activity ── */
+.send-card{margin-top:14px; border-color:var(--bleu)!important}
+.send-card .send-what{font-size:.9rem; color:var(--ink-soft); margin:2px 0 0}
+.send-card .btn.primary{font-size:1rem; padding:10px 18px}
+.send-name{margin-top:10px}
+
+/* ── header ── */
+header.site{
+  border-bottom:2px solid var(--ink);
+  background:var(--card);
+  padding:0 20px;
+}
+.site-inner{max-width:1060px; margin:0 auto; display:flex; align-items:baseline; gap:18px; flex-wrap:wrap; padding:16px 0 12px}
+.brand{font-family:var(--font-display); font-weight:600; font-size:1.5rem; letter-spacing:-.01em}
+.brand sup{color:var(--rouge); font-size:.62em; font-weight:700; margin-left:1px}
+.brand-sub{font-family:var(--font-mono); font-size:.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:.08em}
+nav.tabs{display:flex; gap:2px; margin-left:auto; flex-wrap:wrap}
+nav.tabs button{
+  font-family:var(--font-body); font-size:.92rem; font-weight:500;
+  background:none; border:none; border-bottom:3px solid transparent;
+  padding:8px 12px 10px; color:var(--ink-soft); cursor:pointer;
+}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--rouge); font-weight:600}
+
+main{max-width:1060px; margin:0 auto; padding:26px 20px 80px}
+
+h1,h2,h3{font-family:var(--font-display); font-weight:600; letter-spacing:-.01em; line-height:1.2}
+h2{font-size:1.45rem; margin:0 0 4px}
+h3{font-size:1.1rem; margin:0 0 6px}
+.lede{color:var(--ink-soft); margin:0 0 22px; max-width:62ch}
+
+/* ── generic card ── */
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px}
+.grid{display:grid; gap:14px}
+@media(min-width:720px){ .grid.cols-2{grid-template-columns:1fr 1fr} .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
+
+/* ── buttons ── */
+.btn{
+  font-family:var(--font-body); font-size:.95rem; font-weight:600;
+  border-radius:8px; border:1.5px solid var(--ink); background:var(--card); color:var(--ink);
+  padding:9px 18px; cursor:pointer; transition:background .12s ease;
+}
+.btn:hover{background:var(--bleu-pale)}
+.btn.primary{background:var(--bleu); border-color:var(--bleu); color:#fff}
+.btn.primary:hover{background:#233F82}
+.btn.ghost{border-color:var(--line-strong); font-weight:500}
+.btn.small{padding:5px 12px; font-size:.85rem}
+.btn:disabled{opacity:.45; cursor:default}
+.btn-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+
+/* ── unit picker ── */
+.unit-grid{display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); margin:14px 0 8px}
+.unit-tile{
+  display:flex; align-items:flex-start; gap:10px; padding:12px 14px;
+  border:1px solid var(--line); border-radius:8px; background:var(--card); cursor:pointer;
+  transition:border-color .12s ease;
+}
+.unit-tile:hover{border-color:var(--bleu)}
+.unit-tile.on{border-color:var(--bleu); background:var(--bleu-pale)}
+.unit-tile input{margin-top:4px; accent-color:var(--bleu)}
+.unit-tile .u-code{font-family:var(--font-mono); font-size:.7rem; color:var(--rouge); font-weight:700; letter-spacing:.05em}
+.unit-tile .u-name{font-weight:600; font-size:.93rem; line-height:1.3}
+.unit-tile .u-meta{font-size:.78rem; color:var(--muted); font-family:var(--font-mono)}
+.unit-tile .u-bar{height:4px; background:var(--line); border-radius:2px; margin-top:6px; overflow:hidden}
+.unit-tile .u-bar i{display:block; height:100%; background:var(--vert)}
+
+/* ── dictionary entry (the signature) ── */
+.entry{
+  background:var(--card); border:1px solid var(--line-strong); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:26px 28px; position:relative;
+}
+.entry::before{
+  content:""; position:absolute; inset:8px; border:1px solid var(--line); border-radius:6px; pointer-events:none;
+}
+.headword{font-family:var(--font-display); font-size:2rem; font-weight:600}
+.headword sup{color:var(--rouge); font-weight:700; font-size:.55em}
+.gramm{font-style:italic; color:var(--muted); font-size:.95rem; margin-left:8px}
+.entry .ctx{font-size:1.15rem; margin:16px 0 4px; line-height:1.6}
+.entry .ctx mark{background:none; color:var(--rouge); font-weight:700}
+.entry .ctx .gap{
+  display:inline-block; min-width:5.5ch; border-bottom:2px solid var(--rouge);
+  color:var(--rouge); font-weight:700; text-align:center; padding:0 4px;
+}
+.entry-meta{font-family:var(--font-mono); font-size:.72rem; color:var(--muted); letter-spacing:.05em; text-transform:uppercase}
+
+/* ── options ── */
+.opts{display:grid; gap:8px; margin-top:18px}
+@media(min-width:640px){ .opts.two-col{grid-template-columns:1fr 1fr} }
+.opt{
+  text-align:left; font-size:1rem; font-family:var(--font-body);
+  border:1.5px solid var(--line-strong); border-radius:8px; background:var(--card);
+  padding:11px 14px; cursor:pointer; display:flex; gap:10px; align-items:baseline;
+  transition:border-color .1s ease, background .1s ease;
+}
+.opt:hover{border-color:var(--bleu)}
+.opt .k{font-family:var(--font-mono); font-size:.72rem; color:var(--muted); min-width:1.2em}
+.opt.good{border-color:var(--vert); background:var(--vert-pale)}
+.opt.bad{border-color:var(--rouge); background:var(--rouge-pale)}
+.opt.dim{opacity:.55}
+.opt:disabled{cursor:default}
+.opt .tag{margin-left:auto; font-family:var(--font-mono); font-size:.7rem; color:var(--muted)}
+
+/* checkbox variant (select-all) */
+.opt.check input{accent-color:var(--bleu)}
+
+/* ── feedback ── */
+.feedback{margin-top:14px; padding:12px 14px; border-radius:8px; font-size:.95rem}
+.feedback.good{background:var(--vert-pale); border:1px solid var(--vert); color:#1D5A3A}
+.feedback.bad{background:var(--rouge-pale); border:1px solid var(--rouge); color:#8A1020}
+.feedback.info{background:var(--bleu-pale); border:1px solid var(--bleu); color:#1E3A75}
+.feedback .note{display:block; margin-top:6px; font-size:.88rem; color:var(--ink-soft)}
+
+/* ── flashcard ── */
+.fc-back{border-top:1px dashed var(--line-strong); margin-top:16px; padding-top:16px}
+.fc-answers{font-size:1.25rem; font-weight:600}
+.grade-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px}
+.grade-row .btn{flex:1; min-width:100px}
+.g-again{border-color:var(--rouge); color:var(--rouge)}
+.g-hard{border-color:#B07B12; color:#8A5F0A}
+.g-good{border-color:var(--vert); color:var(--vert)}
+.g-easy{border-color:var(--bleu); color:var(--bleu)}
+
+/* typed input */
+input.typed{
+  font-family:var(--font-body); font-size:1.1rem; width:100%;
+  border:1.5px solid var(--line-strong); border-radius:8px; padding:11px 14px; margin-top:16px;
+  background:var(--card); color:var(--ink);
+}
+input.typed:focus{border-color:var(--bleu)}
+
+/* ── session chrome ── */
+.session-bar{display:flex; align-items:center; gap:14px; margin-bottom:16px; flex-wrap:wrap}
+.progress{flex:1; min-width:140px; height:6px; background:var(--line); border-radius:3px; overflow:hidden}
+.progress i{display:block; height:100%; background:var(--bleu); transition:width .25s ease}
+.session-count{font-family:var(--font-mono); font-size:.8rem; color:var(--muted)}
+.score-pill{font-family:var(--font-mono); font-size:.8rem; padding:3px 10px; border-radius:99px; background:var(--bleu-pale); color:var(--bleu)}
+
+/* ── suivi ── */
+table.stats{width:100%; border-collapse:collapse; font-size:.9rem}
+table.stats th{
+  text-align:left; font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase;
+  letter-spacing:.06em; color:var(--muted); border-bottom:2px solid var(--ink); padding:8px 10px;
+}
+table.stats td{border-bottom:1px solid var(--line); padding:8px 10px; vertical-align:top}
+table.stats td.num{font-family:var(--font-mono); text-align:right}
+.bar{height:6px; background:var(--line); border-radius:3px; overflow:hidden; min-width:80px}
+.bar i{display:block; height:100%; background:var(--vert)}
+.bar i.warn{background:#C98A12}
+.bar i.low{background:var(--rouge)}
+.conf-pair{display:inline-block; background:var(--rouge-pale); border:1px solid var(--rouge); color:#8A1020;
+  border-radius:6px; padding:2px 8px; font-size:.82rem; margin:2px 4px 2px 0}
+.conf-pair b{font-weight:700}
+
+textarea.code{
+  width:100%; min-height:110px; font-family:var(--font-mono); font-size:.78rem;
+  border:1.5px solid var(--line-strong); border-radius:8px; padding:10px; background:var(--card); color:var(--ink);
+}
+.kpi-row{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin:16px 0}
+.kpi{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px 16px}
+.kpi .n{font-family:var(--font-display); font-size:1.9rem; font-weight:600; line-height:1}
+.kpi .n small{font-size:.5em; color:var(--muted); font-family:var(--font-mono)}
+.kpi .l{font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-top:4px}
+
+.pill-select{display:flex; gap:6px; flex-wrap:wrap}
+.pill-select button{
+  border:1.5px solid var(--line-strong); background:var(--card); border-radius:99px;
+  padding:6px 14px; font-size:.88rem; cursor:pointer; font-family:var(--font-body); color:var(--ink);
+}
+.pill-select button.on{border-color:var(--bleu); background:var(--bleu-pale); color:var(--bleu); font-weight:600}
+
+.section-label{
+  font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.1em;
+  color:var(--rouge); font-weight:700; margin:28px 0 8px; display:flex; align-items:center; gap:10px;
+}
+.section-label::after{content:""; flex:1; height:1px; background:var(--line-strong)}
+
+.match-cols{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px}
+.match-cols .opt.sel{border-color:var(--bleu); background:var(--bleu-pale)}
+.match-cols .opt.paired{border-color:var(--vert); background:var(--vert-pale); cursor:default}
+
+footer.site{max-width:1060px; margin:0 auto; padding:20px; border-top:1px solid var(--line);
+  font-family:var(--font-mono); font-size:.72rem; color:var(--muted)}
+.hidden{display:none!important}
+
+/* ── floating accent pad (EN → FR typing) ── */
+.accent-pad{
+  position:fixed; left:50%; transform:translateX(-50%);
+  bottom:max(14px, env(safe-area-inset-bottom));
+  display:flex; gap:4px; flex-wrap:wrap; justify-content:center;
+  background:var(--card); border:1.5px solid var(--ink); border-radius:12px;
+  box-shadow:0 6px 24px rgba(26,36,64,.18);
+  padding:8px 10px; z-index:50; max-width:min(96vw, 560px);
+}
+.accent-pad button{
+  font-family:var(--font-display); font-size:1.25rem; line-height:1;
+  min-width:38px; padding:8px 6px;
+  border:1px solid var(--line-strong); border-radius:8px;
+  background:var(--paper); color:var(--ink); cursor:pointer;
+}
+.accent-pad button:hover{border-color:var(--bleu); background:var(--bleu-pale)}
+.accent-pad button:active{background:var(--bleu); color:#fff}
+body.pad-on main{padding-bottom:150px}
+
+/* ── speak buttons ── */
+button.speak{
+  border:1px solid var(--line-strong); background:var(--card); border-radius:8px;
+  font-size:1rem; padding:4px 8px; cursor:pointer; vertical-align:middle;
+}
+button.speak.small{font-size:.8rem; padding:2px 6px}
+button.speak:hover{border-color:var(--bleu); background:var(--bleu-pale)}
+
+/* ── print (Liste view as handout) ── */
+@media print{
+  header.site nav, footer.site, .no-print, .accent-pad, button.speak, .btn{display:none!important}
+  body{background:#fff}
+  main{padding:0; max-width:none}
+  table.stats th{border-bottom:2px solid #000; color:#000}
+  table.stats td{border-bottom:1px solid #999}
+  h2{font-size:1.2rem}
+}
+
+/* ── the task strip: what is set this week, on every tab ── */
+.sendbar.task{background:var(--bleu-pale); border-bottom-color:#C9D3EA}
+.sendbar.task .dot{background:var(--bleu)}
+.sendbar.task.clear{background:var(--vert-pale); border-bottom-color:#BFD9CB}
+.sendbar.task.clear .dot{background:var(--vert)}
+
+/* the discreet way in for teachers, at the foot of every page */
+footer.site a.teacher-link{color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--line-strong)}
+footer.site a.teacher-link:hover{color:var(--ink)}

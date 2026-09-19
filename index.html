@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Léxico · KS3 &amp; KS4 Spanish BBA</title>
+<meta name="description" content="Spanish vocabulary for Years 7 to 11 at BBA: the word list from every lesson, typed answers in both directions, progress you can send to your teacher.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <div class="site-inner">
+    <div>
+      <div class="brand">el léxico<sup>1</sup></div>
+      <div class="brand-sub">Spanish · Years 7–11 · BBA</div>
+    </div>
+    <nav class="tabs" lang="es" aria-label="Main navigation">
+      <button id="tab-accueil" aria-selected="true">Inicio</button>
+      <button id="tab-revision" aria-selected="false">Repaso</button>
+      <button id="tab-examen" aria-selected="false">Examen</button>
+      <button id="tab-suivi" aria-selected="false">Progreso</button>
+    </nav>
+  </div>
+</header>
+
+<div id="sendbar" class="sendbar hidden" role="status"></div>
+<div id="taskbar" class="sendbar hidden" role="status"></div>
+
+<main>
+  <section id="view-accueil"></section>
+  <section id="view-revision" class="hidden"></section>
+  <section id="view-examen" class="hidden"></section>
+  <section id="view-suivi" class="hidden"></section>
+</main>
+
+<footer class="site">
+  <span lang="es">el léxico¹ — s.m. 1. conjunto de las palabras de una lengua. 2. tu herramienta de repaso.</span>
+  · Progress is saved on this device.
+  · <a href="https://artmemry.github.io/A-Level-French-BBA/teacher.html" class="teacher-link" rel="noopener">Teacher area</a>
+</footer>
+
+<script src="data/index.js"></script>
+<script src="data/synonyms.js"></script>
+<script src="data/genero.js"></script>
+<script src="assignments.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
