@@ -10,7 +10,7 @@
 const CFG={
   key:"es",                       // corpus field with target-language variants
   ls:"lexico-ks-v1",              // its own storage: KS3–KS4 progress never mixes with A-Level
-  prefix:"LEXKS2.",               // export code prefix — the dashboard sorts by this
+  prefix:"LEXKSES2.",             // export code prefix — the dashboard sorts by this
   ttsLang:"es-ES",
   artRe:/^(el |la |los |las |un |una |unos |unas |lo )/,
   accents:["á","é","í","ó","ú","ñ","ü","¡","¿"],
@@ -1150,6 +1150,9 @@ function decodeTask(str){
   }catch(e){ return null; }
 }
 const CLASSES=["Y7","Y8","Y9","Y10","Y11"];
+/* A class is "8Beauvoir" from the teacher's link, or "Y8" if the student set it
+   by hand on this screen. Both mean Year 8. */
+function yearOf(c){ const m=/^Y?(\d{1,2})/.exec(String(c||"").trim()); return m ? "Y"+m[1] : ""; }
 function taskStore(){
   try{ let o=JSON.parse(localStorage.getItem(TASK_KEY)||"{}"); if(o&&o.label) o={all:o}; return o||{}; }catch(e){ return {}; }
 }
@@ -1191,8 +1194,13 @@ function needsClass(){
 }
 function setClass(c){ S.cls=c||""; S.clsOffer=""; save(); yearFilter=""; openUnit=null; renderAccueil(); renderSendBar(); }
 function classButtons(){
+  /* When the teacher's link has named the group, show that group rather than
+     only its year — so a student can read back what their device thinks it is,
+     which is the quickest way to find a link posted in the wrong channel. */
+  const named = S.cls && CLASSES.indexOf(S.cls) < 0 ? S.cls : "";
   return el("div",{class:"btn-row",style:"margin-top:6px"},
-    ...CLASSES.map(c=>el("button",{class:"btn small"+(S.cls===c?" primary":" ghost"),onclick:()=>setClass(S.cls===c?"":c)},c)));
+    ...CLASSES.map(c=>el("button",{class:"btn small"+(yearOf(S.cls)===c?" primary":" ghost"),onclick:()=>setClass(yearOf(S.cls)===c?"":c)},c)),
+    ...(named ? [el("span",{style:"align-self:center;margin-left:8px;color:var(--ink-soft);font-size:.85rem"}, named)] : []));
 }
 function currentTask(){
   const st=taskStore();
@@ -1306,7 +1314,7 @@ function renderAccueil(){
      bar narrows it to the student's own, and their class — which the teacher's
      task link already set — is the default, so most students never touch it. */
   const yearBar=el("div",{class:"btn-row",style:"margin:18px 0 0;flex-wrap:wrap"});
-  const shownYear = yearFilter || (CLASSES.indexOf(S.cls)>=0 ? S.cls : "");
+  const shownYear = yearFilter || (CLASSES.indexOf(yearOf(S.cls))>=0 ? yearOf(S.cls) : "");
   yearBar.append(el("span",{style:"align-self:center;font-weight:600;font-size:.9rem;margin-right:4px"},T.yearLabel+":"));
   YEARS.forEach(y=>{
     yearBar.append(el("button",{class:"btn small"+(shownYear===y.y?" primary":" ghost"),
@@ -1381,7 +1389,7 @@ async function renderListe(uid,lid){
    and 11 start on the mix, which is what the GCSE asks for. A student can
    change it on the lesson screen either way. */
 const KS3=["Y7","Y8","Y9"];
-let sess=null, lessonPrefs={dir: KS3.indexOf(S.cls)>=0 ? "fren" : "mixte"}, revLen=20;
+let sess=null, lessonPrefs={dir: KS3.indexOf(yearOf(S.cls))>=0 ? "fren" : "mixte"}, revLen=20;
 async function startLesson(uid,lid){
   go("accueil");
   const v=$("#view-accueil"); busy(v);
@@ -1620,6 +1628,8 @@ function sessionEnd(v){
   hidePad();
   v.innerHTML="";
   S.sessions.push({t:Date.now(),n:sess.queue.length,ok:sess.ok,label:sess.label,lid:sess.lid});save();
+  /* Several of these are null when there is nothing to show, and DOM append
+     turns null into the text "null". */
   v.append(
     el("h2",null,T.sessDone),
     el("div",{class:"kpi-row"},
