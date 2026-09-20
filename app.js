@@ -76,13 +76,23 @@ const T={
   homeLede:"These are the word lists from your Spanish lessons. Pick your year, then a unit, then a lesson. You can just read a list, or practise it by typing the answers. Your progress is saved on this device, and when you finish you can send it to your teacher in one click.",
   nameLabel:"Tu nombre",
   namePh:"Nombre + inicial, p. ej. Lucía G.",
-  dueCard:n=>n+" palabra"+(n>1?"s":"")+" por repasar hoy",
+  /* Bilingual, target language first: it is the line that starts the work,
+     and its size is stated so a student can judge the cost before starting. */
+  dueCard:n=>n+" palabra"+(n>1?"s":"")+" por repasar hoy · "+n+" word"+(n>1?"s":"")+" to review today",
+  dueMins:n=>"about "+Math.max(1,Math.round(n*12/60))+" min",
   startReview:"Empezar el repaso →",
-  unitsLabel:"Unidades",
-  unitMeta:(l,w,s,m)=>`${l} lecciones · ${w} palabras · ${s} vistas · ${m} dominadas`,
+  nextNew:"Empieza aquí · Start here",
+  nextOn:"Continúa · Continue",
+  nextMeta:(t,n)=>t+" · "+n+" palabra"+(n>1?"s":""),
+  nextGo:"Empezar →",
+  clsSet:c=>"Clase: "+c, clsChange:"Cambiar",
+  unitsLabel:"Units",
+  /* What they have done, never what they have not: a column of zeros on the
+     first screen reads as a verdict. Counts appear once there is one. */
+  unitMeta:(l,w,s,m)=>`${l} lecciones · ${w} palabras`+(m?` · ${m} dominadas`:"")+(s&&!m?` · ${s} vistas`:""),
   yearEmpty:"No lists for that year yet.",
   lessonLine:(n,t,c)=>`Lección ${n} — ${t} (${c} palabras)`,
-  lessonMeta:(s,m)=>`${s} vistas · ${m} dominadas`,
+  lessonMeta:(s,m)=>m?`${m} dominadas`:(s?`${s} vistas`:""),
   accSuffix:" % de precisión",
   list:"Lista", practise:"Practicar",
   backUnits:"← Volver a las unidades", practiseThis:"Practicar esta lista",
@@ -122,7 +132,9 @@ const T={
   toReview:"Para repasar", cont:"Continuar", seeProgress:"Ver mi progreso",
   leechTitle:"Palabras rebeldes", leechCard:n=>`${n} word${n>1?"s":""} missed again and again`,
   leechGo:"Domarlas →", leechLabel:"Rebeldes",
-  examTab:"Examen", examTitle:"Modo examen",
+  /* Not "examen": below the sixth form that reads as something marked and
+     shown to someone. It is a self-check and is named as one. */
+  examTab:"Ponte a prueba", examTitle:"Ponte a prueba",
   examLede:"Random questions from the units you choose, both directions, no corrections until the end — like a real exam. The result is kept in your code.",
   examUnits:"Unidades del examen", examStart:"Empezar el examen",
   examNeedUnits:"Choose at least one unit.",
@@ -153,7 +165,7 @@ const T={
   resetConfirm:"Erase all your progress on this device? This cannot be undone.",
   restored:"Backup restored.", badFile:"File not recognised — choose a backup exported from this site.",
   noName:"(sin nombre)",
-  backupFile:"lexico-progreso.json",
+  backupFile:"spanish-vocab-progress.json",
   sessionLabel:(u,n)=>`${u} · Lección ${n}`, reviewLabel:"Repaso", examLabel:"Examen"
 };
 /*T-END*/
@@ -1193,6 +1205,32 @@ function needsClass(){
   return fileHasClasses()||CLASSES.some(c=>st[c]&&st[c].label);
 }
 function setClass(c){ S.cls=c||""; S.clsOffer=""; save(); yearFilter=""; openUnit=null; renderAccueil(); renderSendBar(); }
+let clsOpen = false;
+/* Where they are, and what one thing they could do about it now. Their own
+   year if we know it, otherwise the first; the lesson they have started but
+   not finished, otherwise the first they have not opened. */
+function nextStepCard(){
+  const y = yearFilter && yearFilter !== "__all" ? yearFilter
+          : (CLASSES.indexOf(yearOf(S.cls)) >= 0 ? yearOf(S.cls) : (YEARS[0] && YEARS[0].y));
+  const uids = UNIT_ORDER.filter(u => !y || UNITS[u].year === y);
+  let pick = null, started = false;
+  for(const uid of uids){
+    for(const lid of UNITS[uid].lessonOrder){
+      const a = aggL(lid), L = UNITS[uid].lessons[lid];
+      if(!L.n) continue;
+      if(a.nSeen && a.nMast < L.n){ pick = {uid, lid, L}; started = true; break; }
+      if(!pick && !a.nSeen) pick = {uid, lid, L};
+    }
+    if(started) break;
+  }
+  if(!pick) return el("span");
+  return el("div",{class:"card",style:"margin-top:14px;border-color:var(--bleu,#2B4C9B)"},
+    el("h3",{style:"margin:0"}, started ? T.nextOn : T.nextNew),
+    el("p",{style:"margin:4px 0 0;color:var(--ink-soft);font-size:.9rem"},
+      T.nextMeta(pick.L.title, pick.L.n)),
+    el("div",{class:"btn-row"},
+      el("button",{class:"btn primary",onclick:()=>startLesson(pick.uid, pick.lid)}, T.nextGo)));
+}
 function classButtons(){
   /* When the teacher's link has named the group, show that group rather than
      only its year — so a student can read back what their device thinks it is,
@@ -1299,12 +1337,25 @@ function renderAccueil(){
       el("label",{for:"student-name",style:"font-weight:600;font-size:.9rem"},T.nameLabel),
       el("input",{id:"student-name",class:"typed",style:"margin-top:8px",value:S.name||"",placeholder:T.namePh,
         oninput:e=>{S.name=e.target.value.trim();save()}}),
+      /* Two rows of year buttons on one screen — this one and the year filter
+         below — and a student cannot tell which matters. Once the class is set,
+         and the teacher's link almost always sets it, this one is a line of
+         text with a way back. */
       el("label",{style:"font-weight:600;font-size:.9rem;display:block;margin-top:14px"},T.clsLabel),
-      el("p",{class:"lede",style:"font-size:.82rem;margin:2px 0 0"},T.clsHint),
-      classButtons(),
+      ...(S.cls && !clsOpen
+        ? [el("div",{class:"btn-row",style:"margin-top:4px"},
+            el("span",{style:"align-self:center"},T.clsSet(S.cls)),
+            el("button",{class:"btn small ghost",onclick:()=>{clsOpen=true;renderAccueil()}},T.clsChange))]
+        : [el("p",{class:"lede",style:"font-size:.82rem;margin:2px 0 0"},T.clsHint), classButtons()]),
       el("div",{class:"btn-row"},audioToggle()), voicePicker()));
+  /* The first thing on the screen is one thing they could finish, with its
+     size on it. A list of seventeen units is a map for an adult and a wall for
+     a twelve-year-old. Review first when something is due, because that is the
+     work that keeps what they already have. */
+  v.append(nextStepCard());
   if(dueN) v.append(el("div",{class:"card",style:"margin-top:14px;border-color:var(--rouge)"},
     el("h3",null,T.dueCard(dueN)),
+    el("p",{style:"margin:2px 0 0;color:var(--ink-soft);font-size:.85rem"},T.dueMins(dueN)),
     el("div",{class:"btn-row"},el("button",{class:"btn primary",onclick:()=>go("revision")},T.startReview))));
   if(lee.length) v.append(el("div",{class:"card",style:"margin-top:14px;border-color:#B07B12"},
     el("h3",null,T.leechTitle+" ("+lee.length+")"),
